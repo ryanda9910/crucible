@@ -1,0 +1,8 @@
+{
+  "name": "daisyUI",
+  "compatibleFrameworks": ["nextjs", "astro", "vite-react"],
+  "deps": {},
+  "devDeps": {
+    "daisyui": "^4.12.0"
+  }
+}

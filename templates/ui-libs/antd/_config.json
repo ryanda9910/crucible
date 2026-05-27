@@ -1,0 +1,13 @@
+{
+  "name": "Ant Design",
+  "compatibleFrameworks": ["nextjs", "vite-react"],
+  "deps": {
+    "antd": "^5.22.0"
+  },
+  "devDeps": {},
+  "frameworkExtraDeps": {
+    "nextjs": {
+      "@ant-design/nextjs-registry": "^1.0.0"
+    }
+  }
+}

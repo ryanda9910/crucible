@@ -1,0 +1,11 @@
+{
+  "name": "Mantine",
+  "compatibleFrameworks": ["nextjs", "vite-react"],
+  "deps": {
+    "@mantine/core": "^7.14.0",
+    "@mantine/hooks": "^7.14.0"
+  },
+  "devDeps": {
+    "postcss-preset-mantine": "^1.17.0"
+  }
+}

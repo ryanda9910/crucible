@@ -1,0 +1,6 @@
+{
+  "name": "None (CSS only)",
+  "compatibleFrameworks": ["nextjs", "astro", "vite-react", "vanilla"],
+  "deps": {},
+  "devDeps": {}
+}

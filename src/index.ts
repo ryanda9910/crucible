@@ -41,6 +41,48 @@ async function main() {
   });
   if (p.isCancel(framework)) { p.cancel('Cancelled.'); process.exit(0); }
 
+  const UI_LIB_OPTIONS: Record<string, Array<{ value: string; label: string; hint: string }>> = {
+    nextjs: [
+      { value: 'tailwind',  label: 'Tailwind CSS',    hint: 'default — already configured' },
+      { value: 'shadcn',    label: 'shadcn/ui',        hint: 'Radix + Tailwind component system' },
+      { value: 'antd',      label: 'Ant Design 5',     hint: 'enterprise-grade React UI library' },
+      { value: 'mui',       label: 'Material UI 6',    hint: 'Google Material Design system' },
+      { value: 'mantine',   label: 'Mantine 7',        hint: 'full-featured component library' },
+      { value: 'chakra',    label: 'Chakra UI 3',      hint: 'accessible component primitives' },
+      { value: 'daisyui',   label: 'daisyUI 4',        hint: 'Tailwind semantic component classes' },
+      { value: 'bootstrap', label: 'Bootstrap 5',      hint: 'classic CSS framework' },
+      { value: 'none',      label: 'None',             hint: 'plain CSS / CSS modules only' },
+    ],
+    astro: [
+      { value: 'tailwind',  label: 'Tailwind CSS',    hint: 'default — already configured' },
+      { value: 'daisyui',   label: 'daisyUI 4',        hint: 'Tailwind semantic component classes' },
+      { value: 'bootstrap', label: 'Bootstrap 5',      hint: 'classic CSS framework' },
+      { value: 'none',      label: 'None',             hint: 'plain CSS only' },
+    ],
+    'vite-react': [
+      { value: 'tailwind',  label: 'Tailwind CSS',    hint: 'default — already configured' },
+      { value: 'shadcn',    label: 'shadcn/ui',        hint: 'Radix + Tailwind component system' },
+      { value: 'antd',      label: 'Ant Design 5',     hint: 'enterprise-grade React UI library' },
+      { value: 'mui',       label: 'Material UI 6',    hint: 'Google Material Design system' },
+      { value: 'mantine',   label: 'Mantine 7',        hint: 'full-featured component library' },
+      { value: 'chakra',    label: 'Chakra UI 3',      hint: 'accessible component primitives' },
+      { value: 'daisyui',   label: 'daisyUI 4',        hint: 'Tailwind semantic component classes' },
+      { value: 'bootstrap', label: 'Bootstrap 5',      hint: 'classic CSS framework' },
+      { value: 'none',      label: 'None',             hint: 'plain CSS / CSS modules only' },
+    ],
+    vanilla: [
+      { value: 'tailwind',  label: 'Tailwind CSS',    hint: 'default — already configured' },
+      { value: 'bootstrap', label: 'Bootstrap 5',      hint: 'classic CSS framework' },
+      { value: 'none',      label: 'None',             hint: 'plain CSS only' },
+    ],
+  };
+
+  const uiLib = await p.select({
+    message: 'UI library',
+    options: UI_LIB_OPTIONS[framework as string] ?? UI_LIB_OPTIONS.nextjs,
+  });
+  if (p.isCancel(uiLib)) { p.cancel('Cancelled.'); process.exit(0); }
+
   const brandName = await p.text({
     message: 'Brand name',
     placeholder: 'Volta Studio',
@@ -122,10 +164,11 @@ async function main() {
     EMAIL:         email as string,
     YEAR:          new Date().getFullYear().toString(),
     FRAMEWORK:     framework as string,
+    UI_LIB:        uiLib as string,
   };
 
   try {
-    await generateProject(templatesDir, targetDir, vars, framework as string);
+    await generateProject(templatesDir, targetDir, vars, framework as string, uiLib as string);
     s.stop('Project generated.');
   } catch (err) {
     s.stop('Generation failed.');

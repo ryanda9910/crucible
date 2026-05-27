@@ -1,0 +1,8 @@
+{
+  "name": "Chakra UI",
+  "compatibleFrameworks": ["nextjs", "vite-react"],
+  "deps": {
+    "@chakra-ui/react": "^3.0.0"
+  },
+  "devDeps": {}
+}

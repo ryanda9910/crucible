@@ -14,11 +14,13 @@
 npm create crucible@latest my-project
 ```
 
+📖 **[Full documentation →](https://ryanda9910.github.io/crucible/)**
+
 </div>
 
 ---
 
-Answer 9 questions. Get a landing page scaffold where AI works inside a design system — not against it.
+Answer 10 questions. Get a landing page scaffold where AI works inside a design system — not against it.
 
 ```
 ┌  crucible
@@ -29,25 +31,26 @@ Answer 9 questions. Get a landing page scaffold where AI works inside a design s
 ◇  Framework
 │  Next.js 14 — App Router, SSR, API routes
 │
+◇  UI library
+│  shadcn/ui — Radix + Tailwind component system
+│
 ◇  Brand name
 │  Volta Studio
 │
-◇  Tagline (hero headline)
+◇  Tagline
 │  Every frame needs a sound.
 │
 ◇  Primary color (hex)
 │  #0A0A0B
 │
-  ... 4 more prompts
-│
-◇  Project generated.
+  ... 5 more prompts
 │
 └  ✓ Volta Studio — nextjs scaffold ready. Build something real.
 ```
 
 ## What's inside
 
-Every scaffold ships two layers:
+Every scaffold ships two layers on top of each other:
 
 **AI system files** — framework-agnostic, always included:
 
@@ -68,7 +71,6 @@ Every scaffold ships two layers:
 | `src/lib/site.ts` | Single source of truth for brand name, domain, email |
 | `src/components/` | Hero, Services, Process, Contact, Header, Footer |
 | API route | Zod-validated contact form + honeypot spam protection |
-| `DESIGN.md` | Tailwind config tokens + anti-pattern list |
 
 ## Supported frameworks
 
@@ -79,23 +81,35 @@ Every scaffold ships two layers:
 | 🔵 | **Vite + React** | SPA, client-side only |
 | ⬜ | **Vanilla JS** | No framework, minimal, fast |
 
-## Why this exists
+## UI library support
 
-AI output quality is a function of the constraints you give it.
+Choose your component system at scaffold time. Deps are injected into `package.json` and providers are wired up automatically.
 
-```
-Slop     = AI + no context
-Not slop = AI + design system + guardrails + concrete specs
-```
+| UI Library | Next.js | Astro | Vite + React | Vanilla |
+|---|:---:|:---:|:---:|:---:|
+| **Tailwind CSS** *(default)* | ✅ | ✅ | ✅ | ✅ |
+| **shadcn/ui** | ✅ | — | ✅ | — |
+| **Ant Design 5** | ✅ | — | ✅ | — |
+| **Material UI 6** | ✅ | — | ✅ | — |
+| **Mantine 7** | ✅ | — | ✅ | — |
+| **Chakra UI 3** | ✅ | — | ✅ | — |
+| **daisyUI 4** | ✅ | ✅ | ✅ | — |
+| **Bootstrap 5** | ✅ | ✅ | ✅ | ✅ |
+| **None** *(plain CSS)* | ✅ | ✅ | ✅ | ✅ |
 
-A crucible is the vessel where raw material transforms into refined output. Same idea: your brand inputs go in, a constrained AI-ready scaffold comes out. The walls are set. The AI works inside them.
+Provider setup, `components.json`, and `UI_SETUP.md` are generated per choice — no manual wiring.
 
-Built from lessons building [Sonara Studio](https://github.com/ryanda9910) landing page with Claude Code.
+## What gets personalized
 
-## Requirements
-
-- Node.js ≥ 18
-- pnpm (recommended) or npm
+| Variable | Example |
+|---|---|
+| `BRAND_NAME` | Volta Studio |
+| `TAGLINE` | Every beat tells a story. |
+| `PRIMARY_COLOR` | #1A1A2E |
+| `ACCENT_COLOR` | #E94560 |
+| `CITY` | Bandung |
+| `DOMAIN` | voltastudio.com |
+| `EMAIL` | hello@voltastudio.com |
 
 ## After scaffolding
 
@@ -106,10 +120,32 @@ pnpm install
 # Complete your design system:
 #   DESIGN.md     → fill in type scale, spacing, component patterns
 #   src/lib/      → add real content (services, work samples, testimonials)
-#   GUARDRAILS.md → will grow as you build
+#   GUARDRAILS.md → grows as you build
 
 pnpm dev
 ```
+
+## Why this exists
+
+AI output quality is a function of the constraints you give it.
+
+```
+Slop     = AI + no context
+Not slop = AI inside a design system + guardrails + concrete specs
+```
+
+A crucible is the vessel where raw material transforms into refined output. Your brand inputs go in, a constrained AI-ready scaffold comes out. The walls are set. The AI works inside them.
+
+Built from lessons building [Sonara Studio](https://github.com/ryanda9910) landing page with Claude Code.
+
+## Documentation
+
+Full docs at **[ryanda9910.github.io/crucible](https://ryanda9910.github.io/crucible/)** — getting started, framework guides, AI system reference, adding a new framework.
+
+## Requirements
+
+- Node.js ≥ 18
+- pnpm (recommended) or npm
 
 ## Contributing
 

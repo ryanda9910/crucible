@@ -3,19 +3,19 @@ import path from 'path';
 
 const TEMPLATE_EXT = '.tmpl';
 
-/**
- * Replaces `{{VAR_NAME}}` placeholders in a string with values from `vars`.
- * Unknown placeholders are left unchanged.
- */
+interface UILibConfig {
+  name: string;
+  compatibleFrameworks: string[];
+  deps: Record<string, string>;
+  devDeps: Record<string, string>;
+  frameworkExtraDeps?: Partial<Record<string, Record<string, string>>>;
+  frameworkExtraDevDeps?: Partial<Record<string, Record<string, string>>>;
+}
+
 function interpolate(content: string, vars: Record<string, string>): string {
   return content.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => vars[key] ?? `{{${key}}}`);
 }
 
-/**
- * Recursively copies a template directory to a destination.
- * Files with `.tmpl` extension have `{{VAR}}` placeholders interpolated.
- * The `.tmpl` extension is stripped from the output filename.
- */
 async function copyTemplate(
   src: string,
   dest: string,
@@ -27,6 +27,7 @@ async function copyTemplate(
     const entries = await fs.readdir(src);
     await fs.ensureDir(dest);
     for (const entry of entries) {
+      if (entry === '_config.json') continue;
       await copyTemplate(
         path.join(src, entry),
         path.join(dest, entry.replace(TEMPLATE_EXT, '')),
@@ -42,33 +43,70 @@ async function copyTemplate(
   await fs.writeFile(dest.replace(TEMPLATE_EXT, ''), output, 'utf8');
 }
 
-/**
- * Generates a complete landing page project from scaffold templates.
- *
- * Merges two template layers:
- * 1. `templates/shared/` — framework-agnostic AI system files (DESIGN.md, GUARDRAILS.md, skills, scripts)
- * 2. `templates/frameworks/{framework}/` — framework-specific source code
- *
- * @param templatesDir - Absolute path to the `templates/` directory
- * @param targetDir    - Absolute path to the output directory (must be empty or non-existent)
- * @param vars         - Template variables to interpolate (e.g. BRAND_NAME, PRIMARY_COLOR)
- * @param framework    - Framework identifier: `nextjs` | `astro` | `vite-react` | `vanilla`
- * @throws If targetDir exists and is not empty
- */
+async function mergePackageJson(
+  targetDir: string,
+  config: UILibConfig,
+  framework: string,
+) {
+  const pkgPath = path.join(targetDir, 'package.json');
+  const pkg = JSON.parse(await fs.readFile(pkgPath, 'utf8'));
+
+  const extraDeps = {
+    ...config.deps,
+    ...(config.frameworkExtraDeps?.[framework] ?? {}),
+  };
+  const extraDevDeps = {
+    ...config.devDeps,
+    ...(config.frameworkExtraDevDeps?.[framework] ?? {}),
+  };
+
+  if (Object.keys(extraDeps).length > 0) {
+    pkg.dependencies = { ...pkg.dependencies, ...extraDeps };
+  }
+  if (Object.keys(extraDevDeps).length > 0) {
+    pkg.devDependencies = { ...pkg.devDependencies, ...extraDevDeps };
+  }
+
+  await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2) + '\n', 'utf8');
+}
+
 export async function generateProject(
   templatesDir: string,
   targetDir: string,
   vars: Record<string, string>,
   framework: string,
+  uiLib: string,
 ) {
   if (await fs.pathExists(targetDir)) {
     const files = await fs.readdir(targetDir);
     if (files.length > 0) throw new Error(`Directory "${targetDir}" is not empty.`);
   }
 
+  // Layer 1: shared AI system files
   const sharedDir = path.join(templatesDir, 'shared');
   await copyTemplate(sharedDir, targetDir, vars);
 
+  // Layer 2: framework-specific source
   const frameworkDir = path.join(templatesDir, 'frameworks', framework);
   await copyTemplate(frameworkDir, targetDir, vars);
+
+  // Layer 3: UI library overlay (optional)
+  if (uiLib && uiLib !== 'tailwind') {
+    const uiLibDir = path.join(templatesDir, 'ui-libs', uiLib);
+    if (await fs.pathExists(uiLibDir)) {
+      const uiLibShared = path.join(uiLibDir, 'shared');
+      if (await fs.pathExists(uiLibShared)) {
+        await copyTemplate(uiLibShared, targetDir, vars);
+      }
+      const uiLibFramework = path.join(uiLibDir, framework);
+      if (await fs.pathExists(uiLibFramework)) {
+        await copyTemplate(uiLibFramework, targetDir, vars);
+      }
+      const configPath = path.join(uiLibDir, '_config.json');
+      if (await fs.pathExists(configPath)) {
+        const config: UILibConfig = JSON.parse(await fs.readFile(configPath, 'utf8'));
+        await mergePackageJson(targetDir, config, framework);
+      }
+    }
+  }
 }

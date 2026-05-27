@@ -1,0 +1,12 @@
+{
+  "name": "shadcn/ui",
+  "compatibleFrameworks": ["nextjs", "vite-react"],
+  "deps": {
+    "@radix-ui/react-slot": "^1.1.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.5",
+    "lucide-react": "^0.462.0"
+  },
+  "devDeps": {}
+}
