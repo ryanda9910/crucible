@@ -1,0 +1,60 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="molten" x1="200" y1="160" x2="200" y2="290" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="40%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#dc2626" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="cup" x1="140" y1="150" x2="260" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2a2a2a"/>
+      <stop offset="100%" stop-color="#111"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="bloom">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" rx="72" fill="#0A0A0B"/>
+
+  <!-- Glow aura behind crucible -->
+  <ellipse cx="200" cy="200" rx="110" ry="90" fill="url(#glow)"/>
+
+  <!-- Crucible body — trapezoid (wider top, narrower bottom) -->
+  <path d="M 140 148 L 260 148 L 240 292 L 160 292 Z" fill="url(#cup)" stroke="#333" stroke-width="1.5"/>
+
+  <!-- Crucible rim (top edge thicker) -->
+  <rect x="134" y="140" width="132" height="16" rx="4" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+
+  <!-- Molten material inside — glowing fill -->
+  <path d="M 148 168 L 252 168 L 236 280 L 164 280 Z" fill="url(#molten)" opacity="0.9"/>
+
+  <!-- Molten surface shimmer (top of liquid) -->
+  <ellipse cx="200" cy="170" rx="50" ry="7" fill="#fcd34d" opacity="0.6"/>
+  <ellipse cx="200" cy="170" rx="35" ry="4" fill="#fef3c7" opacity="0.4"/>
+
+  <!-- Heat sparks above crucible -->
+  <circle cx="186" cy="116" r="4"  fill="#fbbf24" filter="url(#bloom)" opacity="0.95"/>
+  <circle cx="210" cy="100" r="3"  fill="#f97316" filter="url(#bloom)" opacity="0.9"/>
+  <circle cx="224" cy="118" r="2.5" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="196" cy="94"  r="2"  fill="#fcd34d" opacity="0.7"/>
+  <circle cx="218" cy="90"  r="1.5" fill="#fbbf24" opacity="0.55"/>
+
+  <!-- Spark trails rising -->
+  <line x1="186" y1="116" x2="182" y2="96"  stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+  <line x1="210" y1="100" x2="214" y2="80"  stroke="#f97316" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <line x1="224" y1="118" x2="230" y2="100" stroke="#fbbf24" stroke-width="1"   stroke-linecap="round" opacity="0.3"/>
+
+  <!-- Handle left -->
+  <path d="M 134 160 Q 104 160 104 180 Q 104 200 134 200" stroke="#333" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <!-- Handle right -->
+  <path d="M 266 160 Q 296 160 296 180 Q 296 200 266 200" stroke="#333" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+  <!-- Wordmark -->
+  <text x="200" y="354" font-family="'SF Mono', 'Fira Code', 'JetBrains Mono', monospace" font-size="26" fill="white" text-anchor="middle" letter-spacing="10" font-weight="500" opacity="0.9">crucible</text>
+</svg>

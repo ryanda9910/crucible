@@ -1,30 +1,30 @@
 import { defineConfig } from 'vitepress';
 
 export default defineConfig({
-  title: 'create-ai-landing',
+  title: 'crucible',
   description: 'Scaffold a landing page with a full AI agent system built in',
-  base: '/create-ai-landing/',
+  base: '/crucible/',
 
   head: [
-    ['meta', { name: 'theme-color', content: '#D4A574' }],
+    ['meta', { name: 'theme-color', content: '#f97316' }],
     ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:title', content: 'create-ai-landing' }],
+    ['meta', { property: 'og:title', content: 'crucible' }],
     ['meta', { property: 'og:description', content: 'Scaffold a landing page with a full AI agent system built in' }],
   ],
 
   themeConfig: {
-    logo: '🏗️',
-    siteTitle: 'create-ai-landing',
+    logo: '/icon-crucible.svg',
+    siteTitle: 'crucible',
 
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Frameworks', link: '/guide/frameworks' },
       { text: 'Changelog', link: '/changelog' },
       {
-        text: 'v0.2.0',
+        text: 'v1.0.0',
         items: [
-          { text: 'npm', link: 'https://www.npmjs.com/package/@ryanda9910/create-ai-landing' },
-          { text: 'GitHub', link: 'https://github.com/ryanda9910/create-ai-landing' },
+          { text: 'npm', link: 'https://www.npmjs.com/package/create-crucible' },
+          { text: 'GitHub', link: 'https://github.com/ryanda9910/crucible' },
         ],
       },
     ],
@@ -65,8 +65,8 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/ryanda9910/create-ai-landing' },
-      { icon: 'npm', link: 'https://www.npmjs.com/package/@ryanda9910/create-ai-landing' },
+      { icon: 'github', link: 'https://github.com/ryanda9910/crucible' },
+      { icon: 'npm', link: 'https://www.npmjs.com/package/create-crucible' },
     ],
 
     footer: {
@@ -75,7 +75,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/ryanda9910/create-ai-landing/edit/main/docs/:path',
+      pattern: 'https://github.com/ryanda9910/crucible/edit/main/docs/:path',
       text: 'Edit this page on GitHub',
     },
 

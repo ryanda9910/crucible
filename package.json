@@ -1,10 +1,10 @@
 {
-  "name": "@ryanda9910/create-ai-landing",
-  "version": "0.3.0",
+  "name": "create-crucible",
+  "version": "1.0.0",
   "description": "Scaffold a landing page with a full AI agent system built in — DESIGN.md, GUARDRAILS, skills, token enforcement",
   "type": "module",
   "bin": {
-    "create-ai-landing": "./dist/index.js"
+    "create-crucible": "./dist/index.js"
   },
   "files": [
     "dist",

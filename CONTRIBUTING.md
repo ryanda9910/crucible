@@ -1,12 +1,12 @@
-# Contributing to create-ai-landing
+# Contributing to crucible
 
 Thanks for your interest. Contributions are welcome — especially new framework templates, GUARDRAILS entries, and bug fixes.
 
 ## Quick start
 
 ```bash
-git clone https://github.com/ryanda9910/create-ai-landing.git
-cd create-ai-landing
+git clone https://github.com/ryanda9910/crucible.git
+cd crucible
 pnpm install
 pnpm dev  # runs the CLI interactively
 ```

@@ -21,7 +21,7 @@ async function main() {
   const projectArg = process.argv[2];
 
   console.log('');
-  p.intro(pc.bgBlack(pc.white('  create-ai-landing  ')));
+  p.intro(pc.bgBlack(pc.white('  crucible  ')));
 
   const projectName = projectArg ?? (await p.text({
     message: 'Project directory name',
@@ -151,7 +151,7 @@ async function main() {
     'Next steps',
   );
 
-  p.outro(`${pc.green('✓')} ${pc.bold(brandName as string)} — ${framework} ready. Build something specific.`);
+  p.outro(`${pc.green('✓')} ${pc.bold(brandName as string)} — ${framework} scaffold ready. Build something real.`);
 }
 
 main();
