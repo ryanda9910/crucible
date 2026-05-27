@@ -1,5 +1,9 @@
 # Quick Start
 
+<div style="margin:1.5rem 0">
+  <img src="/demo.gif" alt="crucible CLI demo" style="width:100%;border-radius:10px;border:1px solid var(--vp-c-divider)" />
+</div>
+
 ## Requirements
 
 - Node.js ≥ 18

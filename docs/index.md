@@ -41,3 +41,22 @@ features:
     title: 4 Frameworks
     details: Next.js 14, Astro 4, Vite + React, Vanilla JS. Same AI system — different runtime. Pick what fits your stack.
 ---
+
+<div class="demo-section">
+  <img src="/demo.gif" alt="crucible CLI demo — 10 prompts to a fully wired scaffold" />
+</div>
+
+<style>
+.demo-section {
+  max-width: 860px;
+  margin: 3rem auto 0;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+.demo-section img {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-divider);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+</style>
