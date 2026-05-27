@@ -142,8 +142,6 @@ Not slop = AI inside a design system + guardrails + concrete specs
 
 A crucible is the vessel where raw material transforms into refined output. Your brand inputs go in, a constrained AI-ready scaffold comes out. The walls are set. The AI works inside them.
 
-Built from lessons building [Sonara Studio](https://github.com/ryanda9910) landing page with Claude Code.
-
 ## Documentation
 
 Full docs at **[ryanda9910.github.io/crucible](https://ryanda9910.github.io/crucible/)** — getting started, framework guides, AI system reference, adding a new framework.
