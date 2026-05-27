@@ -30,7 +30,8 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "release": "pnpm build && pnpm publish --access public"
+    "release": "pnpm build && pnpm publish --access public",
+    "test:e2e": "tsx src/test-e2e.ts"
   },
   "lint-staged": {
     "src/**/*.ts": [
