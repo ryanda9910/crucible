@@ -18,6 +18,12 @@ npm create crucible@latest my-project
 
 </div>
 
+<div align="center">
+
+![crucible demo](https://raw.githubusercontent.com/ryanda9910/crucible/main/docs/public/demo.gif)
+
+</div>
+
 ---
 
 Answer 10 questions. Get a landing page scaffold where AI works inside a design system — not against it.
