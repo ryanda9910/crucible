@@ -3,10 +3,19 @@ import path from 'path';
 
 const TEMPLATE_EXT = '.tmpl';
 
+/**
+ * Replaces `{{VAR_NAME}}` placeholders in a string with values from `vars`.
+ * Unknown placeholders are left unchanged.
+ */
 function interpolate(content: string, vars: Record<string, string>): string {
   return content.replace(/\{\{([A-Z_]+)\}\}/g, (_, key) => vars[key] ?? `{{${key}}}`);
 }
 
+/**
+ * Recursively copies a template directory to a destination.
+ * Files with `.tmpl` extension have `{{VAR}}` placeholders interpolated.
+ * The `.tmpl` extension is stripped from the output filename.
+ */
 async function copyTemplate(
   src: string,
   dest: string,
@@ -33,6 +42,19 @@ async function copyTemplate(
   await fs.writeFile(dest.replace(TEMPLATE_EXT, ''), output, 'utf8');
 }
 
+/**
+ * Generates a complete landing page project from scaffold templates.
+ *
+ * Merges two template layers:
+ * 1. `templates/shared/` — framework-agnostic AI system files (DESIGN.md, GUARDRAILS.md, skills, scripts)
+ * 2. `templates/frameworks/{framework}/` — framework-specific source code
+ *
+ * @param templatesDir - Absolute path to the `templates/` directory
+ * @param targetDir    - Absolute path to the output directory (must be empty or non-existent)
+ * @param vars         - Template variables to interpolate (e.g. BRAND_NAME, PRIMARY_COLOR)
+ * @param framework    - Framework identifier: `nextjs` | `astro` | `vite-react` | `vanilla`
+ * @throws If targetDir exists and is not empty
+ */
 export async function generateProject(
   templatesDir: string,
   targetDir: string,
@@ -44,11 +66,9 @@ export async function generateProject(
     if (files.length > 0) throw new Error(`Directory "${targetDir}" is not empty.`);
   }
 
-  // 1. Copy shared files (framework-agnostic)
   const sharedDir = path.join(templatesDir, 'shared');
   await copyTemplate(sharedDir, targetDir, vars);
 
-  // 2. Copy framework-specific files on top
   const frameworkDir = path.join(templatesDir, 'frameworks', framework);
   await copyTemplate(frameworkDir, targetDir, vars);
 }

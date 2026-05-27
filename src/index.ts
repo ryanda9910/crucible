@@ -2,10 +2,20 @@
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, URL } from 'url';
 import { generateProject } from './generator.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(
+  await (await import('fs-extra')).default.readFile(
+    new URL('../package.json', import.meta.url), 'utf8'
+  )
+) as { version: string };
+
+if (process.argv.includes('--version') || process.argv.includes('-v')) {
+  console.log(pkg.version);
+  process.exit(0);
+}
 
 async function main() {
   const projectArg = process.argv[2];

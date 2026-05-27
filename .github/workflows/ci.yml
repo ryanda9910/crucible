@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build & Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Generator smoke test
+        run: |
+          for fw in nextjs astro vite-react vanilla; do
+            node -e "
+              import('./dist/generator.js').then(({ generateProject }) =>
+                generateProject(
+                  './templates',
+                  '/tmp/test-' + '$fw',
+                  {
+                    BRAND_NAME: 'Test Brand', BRAND_SLUG: 'test-brand',
+                    TAGLINE: 'Test tagline.', INDUSTRY: 'other',
+                    CITY: 'Jakarta', PRIMARY_COLOR: '#0A0A0B',
+                    ACCENT_COLOR: '#D4A574', DOMAIN: 'test.com',
+                    EMAIL: 'test@test.com', YEAR: '2026', FRAMEWORK: '$fw'
+                  },
+                  '$fw'
+                ).then(() => console.log('✓ $fw')).catch(e => { console.error(e); process.exit(1); })
+              )
+            "
+          done
+
+  commitlint:
+    name: Commit Lint
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Validate PR commits
+        run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
